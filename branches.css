@@ -1,0 +1,79 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to bottom, #004371 50%, white 50%);
+    flex-direction: column;
+    text-align: center;
+}
+
+.header {
+    display: flex;
+    align-items: center; /* Align logo and text horizontally */
+    justify-content: center;
+    width: 100%;
+    padding: 0px 0;
+    background-color: #004371;
+    color: white;
+    font-size: 50px;
+    margin-top: 0px;
+}
+
+.header img {
+    width: 100px;
+    height: 100px;
+    margin-right: 15px; /* Space between logo and text */
+}
+
+.header div {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.header .subheading {
+    font-size: 18px; /* Slightly smaller font for the 'Autonomous' text */
+    margin-top: 5px; /* Space between the college name and 'Autonomous' */
+}
+
+.branch-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 50px;
+}
+
+.branch-block {
+    background-color: white;
+    padding: 20px;
+    width: 150px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 41, 73, 0.2);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.branch-block:hover {
+    transform: scale(1.05);
+    background-color: #004173;
+    color: white;
+}
+
+.branch-block a {
+    text-decoration: none;
+    color: #004173;
+    font-weight: bold;
+}
+
+.branch-block h3 {
+    margin: 10px 0;
+}

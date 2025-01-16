@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Branches - Student Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+        }
+
+        .header {
+            background-color: #1f4d63;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .filter-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .filter-container label {
+            font-weight: bold;
+            color: #1f4d63;
+        }
+
+        .filter-container select {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+            border: 1px solid #1f4d63;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        #results-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #1f4d63;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #1f4d63;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f3f4f6;
+        }
+
+        p {
+            color: #1f4d63;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+    <script>
+        // Fetch student details dynamically based on branch
+        async function displayStudentsByBranch() {
+            const branch = document.getElementById("branch-selector").value;
+            const resultsContainer = document.getElementById("results-container");
+            resultsContainer.innerHTML = ""; // Clear previous results
+
+            if (!branch) {
+                resultsContainer.innerHTML = `<p>Please select a branch to view student details.</p>`;
+                return;
+            }
+
+            try {
+                // Fetch data from the server
+                const response = await fetch(`server_endpoint?branch=${branch}`);
+                const students = await response.json();
+
+                if (students.length > 0) {
+                    // Create a table to display student details
+                    const table = document.createElement("table");
+                    const headerRow = table.insertRow();
+                    ["First Name", "Last Name", "Roll Number", "Rank", "DOB", "Email", "Phone"].forEach(header => {
+                        const th = document.createElement("th");
+                        th.innerText = header;
+                        headerRow.appendChild(th);
+                    });
+
+                    // Populate the table with student data
+                    students.forEach(student => {
+                        const row = table.insertRow();
+                        row.insertCell().innerText = student.firstName;
+                        row.insertCell().innerText = student.lastName;
+                        row.insertCell().innerText = student.rollNumber;
+                        row.insertCell().innerText = student.rank;
+                        row.insertCell().innerText = student.dob;
+                        row.insertCell().innerText = student.email;
+                        row.insertCell().innerText = student.phone;
+                    });
+
+                    resultsContainer.appendChild(table);
+                } else {
+                    resultsContainer.innerHTML = `<p>No students found for branch ${branch}.</p>`;
+                }
+            } catch (error) {
+                console.error("Error fetching student details:", error);
+                resultsContainer.innerHTML = `<p>Unable to fetch data. Please try again later.</p>`;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <h1>Student Details by Branch</h1>
+    </div>
+    <div class="filter-container">
+        <label for="branch-selector">Select Branch:</label>
+        <select id="branch-selector" onchange="displayStudentsByBranch()">
+            <option value="">-- Select a Branch --</option>
+            <option value="CSE">CSE</option>
+            <option value="CSM">CSM</option>
+            <option value="CAD">CAD</option>
+            <option value="ECE">ECE</option>
+            <option value="IT">IT</option>
+            <option value="EEE">EEE</option>
+            <option value="CIVIL">CIVIL</option>
+            <option value="MECH">MECH</option>
+        </select>
+    </div>
+    <div id="results-container">
+        <!-- Results will be displayed here -->
+    </div>
+</body>
+</html>

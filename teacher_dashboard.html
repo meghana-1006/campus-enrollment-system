@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f3f4f6;
+    }
+    .header {
+      background-color: #1f4d63;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header h1 {
+      margin: 0;
+    }
+    .logout-btn {
+      background-color: #e63946;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .dashboard-container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .search-container {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    .search-container input {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+    .search-container button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #1f4d63;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .student-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .student-table th, .student-table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+    .student-table th {
+      background-color: #1f4d63;
+      color: white;
+    }
+    img {
+      max-width: 100px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <h1>Teacher Dashboard</h1>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </header>
+
+  <div class="dashboard-container">
+    <div class="search-container">
+      <input type="text" id="search-rank" placeholder="Enter Rank">
+      <button onclick="searchByRank()">Search</button>
+    </div>
+    <h2>Submitted Student Details</h2>
+    <table class="student-table">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Roll Number</th>
+          <th>Rank</th>
+          <th>DOB</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Branch</th>
+          <th>Documents</th>
+        </tr>
+      </thead>
+      <tbody id="student-data">
+        <!-- Student details will be dynamically populated here -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Retrieve student data from localStorage
+    const studentData = JSON.parse(localStorage.getItem('students')) || [];
+
+    // Get the table body where data will be inserted
+    const tableBody = document.getElementById('student-data');
+
+    // Function to display student details
+    function displayStudents(data) {
+      tableBody.innerHTML = ''; // Clear table
+      data.forEach(student => {
+        // Create a table row
+        const row = document.createElement('tr');
+
+        // Populate student details
+        row.innerHTML = `
+          <td>${student.firstName}</td>
+          <td>${student.lastName}</td>
+          <td>${student.rollNumber}</td>
+          <td>${student.rank}</td>
+          <td>${student.dob}</td>
+          <td>${student.email}</td>
+          <td>${student.phone}</td>
+          <td>${student.branch}</td>
+          <td>
+            ${Object.keys(student.documents || {}).map(doc => `
+              <img src="${student.documents[doc]}" alt="${doc}" style="max-width:100px; display:block; margin-bottom:10px;">
+              <a href="${student.documents[doc]}" download="${doc}.jpg">Download ${doc.replace(/-/g, ' ')}</a>
+            `).join('<br>')}
+          </td>
+        `;
+
+        // Append the row to the table body
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Display all students initially
+    displayStudents(studentData);
+
+    // Search by rank
+    function searchByRank() {
+      const rankInput = document.getElementById('search-rank').value.trim();
+      if (!rankInput) {
+        alert('Please enter a rank to search.');
+        return;
+      }
+
+      const filteredStudents = studentData.filter(student => student.rank === rankInput);
+
+      if (filteredStudents.length > 0) {
+        displayStudents(filteredStudents);
+      } else {
+        tableBody.innerHTML = '<tr><td colspan="9">No students found with the given rank.</td></tr>';
+      }
+    }
+
+    // Logout function
+    function logout() {
+      window.location.href = 'login.html';
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Details</title>
+  <link rel="stylesheet" href="fft.css">
+  <style>
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #1f4d63;
+      padding: 10px;
+      border-bottom: 2px solid #ddd;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+    .college-logo {
+      width: 80px;
+      height: auto;
+      margin-right: 15px;
+    }
+    .college-name {
+      font-size: 1.5em;
+      text-align: left;
+    }
+    .autonomous {
+      text-align: center;
+      font-size: 1.5em;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-left">
+      <img src="https://vishnu.edu.in/upload_news/newlogo.bmp" alt="College Logo" class="college-logo">
+      <h1 class="college-name">Shri Vishnu Engineering College For Women, Bhimavaram</h1>
+    </div>
+    <div class="autonomous">(Autonomous)</div>
+  </header>
+
+  <div class="form-container">
+    <h2>Enter Your Personal Details</h2>
+    <form id="student-details-form">
+      <table class="form-table">
+        <tr>
+          <td><label for="first-name">First Name:</label></td>
+          <td><input type="text" id="first-name" required></td>
+        </tr>
+        <tr>
+          <td><label for="last-name">Last Name:</label></td>
+          <td><input type="text" id="last-name" required></td>
+        </tr>
+        <tr>
+          <td><label for="roll-number">Roll Number:</label></td>
+          <td><input type="text" id="roll-number" required></td>
+        </tr>
+        <tr>
+          <td><label for="rank">Rank:</label></td>
+          <td><input type="text" id="rank" required></td>
+        </tr>
+        <tr>
+          <td><label for="dob">Date of Birth:</label></td>
+          <td><input type="date" id="dob" required></td>
+        </tr>
+        <tr>
+          <td><label for="email">Email ID:</label></td>
+          <td><input type="email" id="email" required></td>
+        </tr>
+        <tr>
+          <td><label for="phone">Phone Number:</label></td>
+          <td><input type="tel" id="phone" required></td>
+        </tr>
+        <tr>
+          <td><label for="branch">Branch:</label></td>
+          <td><input type="text" id="branch" required></td>
+        </tr>
+      </table>
+      <div class="form-actions">
+        <button type="button" class="submit-button" onclick="saveStudentData()">Next</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function saveStudentData() {
+      const firstName = document.getElementById('first-name').value;
+      const lastName = document.getElementById('last-name').value;
+      const rollNumber = document.getElementById('roll-number').value;
+      const rank = document.getElementById('rank').value;
+      const dob = document.getElementById('dob').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const branch = document.getElementById('branch').value;
+
+      const studentData = {
+        firstName,
+        lastName,
+        rollNumber,
+        rank,
+        dob,
+        email,
+        phone,
+        branch
+      };
+
+      let allStudents = JSON.parse(localStorage.getItem('students')) || [];
+      allStudents.push(studentData);
+      localStorage.setItem('students', JSON.stringify(allStudents));
+
+      window.location.href = 'form2.html';
+    }
+  </script>
+</body>
+</html>

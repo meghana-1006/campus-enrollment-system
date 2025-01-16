@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Enrollment Process</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(180deg, #1f4d63, #0e2f3f);
+            color: white;
+            overflow: hidden;
+        }
+        header {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 1rem 0;
+        }
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        nav a:hover {
+            color: #ff6600;
+        }
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .hero button {
+            background-color: #ff6600;
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            border-radius: 5px;
+        }
+        .hero button:hover {
+            background-color: #ff4500;
+        }
+        #content {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+        }
+    </style>
+    <script>
+        function displayContent(section) {
+            const content = document.getElementById('content');
+            if (section === 'prerequisites') {
+                content.innerHTML = '<p>When the student is physically attending the college these are the pre-requisites they must carry along with them: they are 1. 10th certificate 2. 12th certificate 3. Transfer certificate 4. EAMCET rank card 5. Allotment order 6. Aadhar card xerox 7. Passport size photos - 6</p>';
+            } else if (section === 'about') {
+                content.innerHTML = '<p>Welcome to Shri Vishnu Engineering College for Women, Bhimavaram. In this page, you are here to fill out your details about yourself.</p>';
+            } else if (section === 'contact') {
+                content.innerHTML = '<p>To contact us: mail: svecw@edu.in</p>';
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Campus Enrollment Process</h1>
+    </header>
+    <nav>
+        <a onclick="displayContent('prerequisites')">Pre-requisites</a>
+        <a onclick="displayContent('about')">About</a>
+        <a onclick="displayContent('contact')">Contact</a>
+    </nav>
+    <div class="hero">
+        <h1>Welcome</h1>
+        <p>To proceed further, click the below button</p>
+        <button onclick="location.href='login.html'">Click Here</button>
+    </div>
+    <div id="content"></div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="login.css">
+    <script>
+        function validateStudentLogin(event) {
+            event.preventDefault(); // Prevent form submission
+            const rank = document.getElementById('student-rank').value;
+            const rollNumber = document.getElementById('eamcet-roll').value;
+
+            // Validate credentials
+            if (rank === "1234" && rollNumber === "2023553") {
+                window.location.href = "branches.html"; // Redirect to branches.html
+            } else {
+                alert("Invalid rank or roll number. Please try again.");
+            }
+        }
+
+        function validateTeacherLogin(event) {
+            event.preventDefault(); // Prevent form submission
+            const email = document.getElementById('teacher-email').value;
+            const password = document.getElementById('teacher-password').value;
+
+            // Validate credentials (dummy validation for demonstration purposes)
+            if (email === "teacher@vishnu.edu" && password === "password123") {
+                window.location.href = "teacher_dashboard.html"; // Redirect to branches2.html
+            } else {
+                alert("Invalid email or password. Please try again.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <img src="https://vishnu.edu.in/upload_news/newlogo.bmp" alt="Vishnu College Logo">
+        <div>Shri Vishnu Engineering College for Women, Bhimavaram
+        <br>(Autonomous)</div>
+    </div>
+
+    <div class="login-container">
+        <!-- Student Login Block -->
+        <div class="login-block">
+            <h2>Student Login</h2>
+            <img src="https://cdn-icons-png.flaticon.com/512/68/68045.png" alt="Student Logo" class="login-logo">
+            <form onsubmit="validateStudentLogin(event)">
+                <label for="student-rank">Student Rank</label>
+                <input type="text" id="student-rank" name="student-rank" placeholder="Enter your rank" required>
+
+                <label for="eamcet-roll">EAMCET Roll Number</label>
+                <input type="text" id="eamcet-roll" name="eamcet-roll" placeholder="Enter your roll number" required>
+
+                <button type="submit">Login</button>
+            </form>
+        </div>
+
+        <!-- Teacher Login Block -->
+        <div class="login-block">
+            <h2>Teacher Login</h2>
+            <img src="https://as2.ftcdn.net/v2/jpg/04/37/33/65/1000_F_437336524_zC6UZuPMjbY9YVcsifuXE9ALPE2Kvfml.jpg" alt="Teacher Logo" class="login-logo">
+            <form onsubmit="validateTeacherLogin(event)">
+                <label for="teacher-email">Email ID</label>
+                <input type="email" id="teacher-email" name="teacher-email" placeholder="Enter your email" required>
+
+                <label for="teacher-password">Password</label>
+                <input type="password" id="teacher-password" name="teacher-password" placeholder="Enter your password" required>
+
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

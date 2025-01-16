@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document Upload</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f3f4f6;
+    }
+    .header {
+      background-color: #1f4d63;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .form-container {
+      max-width: 600px;
+      margin: 40px auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border: 1px solid #1f4d63;
+    }
+    .form-table {
+      width: 100%;
+      border-spacing: 10px;
+    }
+    .form-table td {
+      padding: 10px;
+    }
+    label {
+      color: #1f4d63;
+      font-weight: bold;
+    }
+    input[type="file"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #1f4d63;
+      border-radius: 5px;
+      background-color: #f3f4f6;
+    }
+    .submit-button {
+      background-color: #1f4d63;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .submit-button:hover {
+      background-color: #163d4e;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <img src="https://vishnu.edu.in/upload_news/newlogo.bmp" alt="College Logo" class="college-logo">
+    <h1 class="college-name">Shri Vishnu Engineering College For Women</h1>
+  </header>
+
+  <div class="form-container">
+    <h2>Upload Your Documents</h2>
+    <form id="document-upload-form" enctype="multipart/form-data">
+      <table class="form-table">
+        <tr>
+          <td><label for="rank-card">EAMCET Rank Card (JPG only):</label></td>
+          <td><input type="file" id="rank-card" name="rank-card" accept=".jpg" required></td>
+        </tr>
+        <tr>
+          <td><label for="aadhar-card">Aadhaar Card (JPG only):</label></td>
+          <td><input type="file" id="aadhar-card" name="aadhar-card" accept=".jpg" required></td>
+        </tr>
+        <tr>
+          <td><label for="tenth-certificate">10th Certificate (JPG only):</label></td>
+          <td><input type="file" id="tenth-certificate" name="tenth-certificate" accept=".jpg" required></td>
+        </tr>
+        <tr>
+          <td><label for="twelfth-certificate">12th Certificate (JPG only):</label></td>
+          <td><input type="file" id="twelfth-certificate" name="twelfth-certificate" accept=".jpg" required></td>
+        </tr>
+        <tr>
+          <td><label for="transfer-certificate">Transfer Certificate (JPG only):</label></td>
+          <td><input type="file" id="transfer-certificate" name="transfer-certificate" accept=".jpg" required></td>
+        </tr>
+      </table>
+      <div class="form-actions">
+        <button type="submit" class="submit-button">Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('document-upload-form').addEventListener('submit', function(event) {
+      event.preventDefault();  // Prevent the default form submission
+
+      // Initialize an empty object to hold the document data
+      const documents = {};
+
+      // Convert uploaded files to base64 and store them in the object
+      const files = [
+        'rank-card', 'aadhar-card', 'tenth-certificate', 'twelfth-certificate', 'transfer-certificate'
+      ];
+
+      let filesLoaded = 0;  // Variable to track when all files are processed
+
+      files.forEach(fileId => {
+        const fileInput = document.getElementById(fileId);
+        if (fileInput.files[0]) {
+          const file = fileInput.files[0];
+          const reader = new FileReader();
+
+          reader.onload = function(e) {
+            documents[fileId] = e.target.result; // Store the base64 encoded file
+            filesLoaded++;  // Increment the counter for files processed
+
+            if (filesLoaded === files.length) {
+              // Save the data to localStorage (assuming last student is the one uploading docs)
+              let allStudents = JSON.parse(localStorage.getItem('students')) || [];
+              const lastStudent = allStudents[allStudents.length - 1];
+              lastStudent.documents = documents;
+              localStorage.setItem('students', JSON.stringify(allStudents));
+
+              alert('Documents uploaded successfully!');
+              window.location.href = 'login.html';  // Redirect to the login page after all files are processed
+            }
+          };
+
+          reader.readAsDataURL(file);  // Convert the file to base64
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
